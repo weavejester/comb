@@ -34,7 +34,15 @@
 
 (defmacro fn
   "Compile a template into a function that takes the supplied arguments. The
-  template source of the template may be a string, or an IO source such as a
-  File, Reader or InputStream."
+  template source may be a string, or an I/O source such as a File, Reader or
+  InputStream."
   [args source]
   `(compile-fn '~args ~source))
+
+(defn eval
+  "Evaluate a template using the supplied bindings. The template source may
+  be a string, or an I/O source such as a File, Reader or InputStream."
+  [source bindings]
+  (let [keys (map (comp symbol name) (keys bindings))
+        func (compile-fn [{:keys keys}] source)]
+    (func bindings)))
