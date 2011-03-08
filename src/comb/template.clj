@@ -1,6 +1,7 @@
 (ns comb.template
   "Clojure templating library."
-  (:refer-clojure :exclude [fn eval]))
+  (:refer-clojure :exclude [fn eval])
+  (:require [clojure.core :as core]))
 
 (defn- read-source [source]
   (if (string? source)
@@ -26,10 +27,14 @@
               (parse-string after))
        (list after)))))
 
+(defn compile-fn [args src]
+  (core/eval
+   `(core/fn ~args
+      (str ~@(parse-string (read-source src))))))
+
 (defmacro fn
   "Compile a template into a function that takes the supplied arguments. The
   template source of the template may be a string, or an IO source such as a
   File, Reader or InputStream."
   [args source]
-  `(clojure.core/fn ~args
-     (str ~@(parse-string (read-source source)))))
+  `(compile-fn '~args ~source))
