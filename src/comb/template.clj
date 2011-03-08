@@ -19,18 +19,21 @@
         "(.*)\\z")))
 
 (defn- parse-string [src]
-  (lazy-seq
-   (let [[_ before expr after] (re-matches parser-regex src)]
-     (if expr
-       (list* before
-              (read-string expr) 
-              (parse-string after))
-       (list after)))))
+  (with-out-str
+    (print "(str ")
+    (loop [src src]
+      (let [[_ before expr after] (re-matches parser-regex src)]
+        (if expr
+          (do (pr before)
+              (print " " expr " ")
+              (recur after))
+          (do (prn after)
+              (print ")")))))))
 
 (defn compile-fn [args src]
   (core/eval
    `(core/fn ~args
-      (str ~@(parse-string (read-source src))))))
+     ~(-> src read-source parse-string read-string))))
 
 (defmacro fn
   "Compile a template into a function that takes the supplied arguments. The
