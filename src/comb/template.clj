@@ -54,7 +54,9 @@
 (defn eval
   "Evaluate a template using the supplied bindings. The template source may
   be a string, or an I/O source such as a File, Reader or InputStream."
-  [source bindings]
-  (let [keys (map (comp symbol name) (keys bindings))
-        func (compile-fn [{:keys keys}] source)]
-    (func bindings)))
+  ([source]
+     (eval source {}))
+  ([source bindings]
+     (let [keys (map (comp symbol name) (keys bindings))
+           func (compile-fn [{:keys keys}] source)]
+       (func bindings))))
