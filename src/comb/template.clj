@@ -18,22 +18,31 @@
         ")?"
         "(.*)\\z")))
 
+(defn emit-string [s]
+  (print "(print " (pr-str s) ")"))
+
+(defn emit-expr [expr]
+  (if (.startsWith expr "=")
+    (print "(print " (subs expr 1) ")")
+    (print expr)))
+
 (defn- parse-string [src]
   (with-out-str
-    (print "(str ")
+    (print "(do ")
     (loop [src src]
       (let [[_ before expr after] (re-matches parser-regex src)]
         (if expr
-          (do (pr before)
-              (print " " expr " ")
+          (do (emit-string before)
+              (emit-expr expr)
               (recur after))
-          (do (prn after)
+          (do (emit-string after)
               (print ")")))))))
 
 (defn compile-fn [args src]
   (core/eval
    `(core/fn ~args
-     ~(-> src read-source parse-string read-string))))
+      (with-out-str
+        ~(-> src read-source parse-string read-string)))))
 
 (defmacro fn
   "Compile a template into a function that takes the supplied arguments. The
