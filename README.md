@@ -10,6 +10,8 @@ This is commonly used for control structures like loops or conditionals.
 
 For example:
 
+    (require '[comb.template :as template])
+    
     (template/eval "<% (dotimes [x 3] %>foo<% ) %>")
     => "foofoofoo"
 
@@ -29,7 +31,7 @@ To install, add the following dependency to your `project.clj` file:
 
 ## API Documentation
 
-### template/eval 
+### template/eval
 
     (template/eval source)
     (template/eval source bindings)
