@@ -29,7 +29,7 @@ To install, add the following dependency to your `project.clj` file:
 
 ## API Documentation
 
-#### template/eval 
+### template/eval 
 
     (template/eval source)
     (template/eval source bindings)
@@ -42,7 +42,7 @@ Example of use:
 
     (template/eval "Hello <%= name %>" {:name "Bob"})
 
-#### template/fn
+### template/fn
 
     (template/fn args source)
 
