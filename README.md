@@ -1,13 +1,22 @@
-# comb
+# Comb
 
-FIXME: write description
+Comb is a simple templating system for Clojure. You can use Comb to embed
+fragments of Clojure code into a text file.
 
-## Usage
+The `<% %>` tags are used to embed a section of Clojure code with side-effects.
+This is commonly used for control structures like loops or conditionals.
 
-FIXME: write
+For example:
 
-## License
+    (template/eval "<% (dotimes [x 3] %>foo<% ) %>")
+    => "foofoofoo"
 
-Copyright (C) 2010 FIXME
+The `<%= %>` tags will be subsituted for the value of the expression within them.
+This is used for inserting values into a template.
 
-Distributed under the Eclipse Public License, the same as Clojure.
+For example:
+
+    (template/eval "Hello <%= name %>" {:name "Alice"})
+    => "Hello Alice"
+
+
