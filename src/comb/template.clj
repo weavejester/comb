@@ -1,7 +1,8 @@
 (ns comb.template
   "Clojure templating library."
   (:refer-clojure :exclude [fn eval])
-  (:require [clojure.core :as core]))
+  (:require [clojure.core :as core]
+            [clojure.string :as s]))
 
 (defn- read-source [source]
   (if (string? source)
@@ -18,23 +19,33 @@
         ")?"
         "(.*)\\z")))
 
-(defn emit-string [s]
-  (print "(print " (pr-str s) ")"))
+(defn emit-string
+  ([s]
+     (print "(print " (pr-str s) ")"))
+  ([s emit-next-break-line?]
+     (if emit-next-break-line?
+       (emit-string s)
+       (emit-string (s/replace-first s #"\n" "")))))
 
 (defn emit-expr [expr]
-  (if (.startsWith expr "=")
-    (print "(print " (subs expr 1) ")")
-    (print expr)))
+  (let [emit-result? (.startsWith expr "=")
+        emit-next-break-line? (not (.endsWith expr "-"))
+        substring-start (if emit-result? 1 0)
+        substring-end (if emit-next-break-line? (count expr) (- (count expr) 1))
+        final-expr (subs expr substring-start substring-end)]
+    (if emit-result?
+      (print "(print " final-expr ")")
+      (print final-expr))
+    emit-next-break-line?))
 
-(defn- parse-string [src]
+(defn parse-string [src]
   (with-out-str
     (print "(do ")
-    (loop [src src]
+    (loop [src src emit-next-break-line? true]
       (let [[_ before expr after] (re-matches parser-regex src)]
         (if expr
-          (do (emit-string before)
-              (emit-expr expr)
-              (recur after))
+          (do (emit-string before emit-next-break-line?)
+              (recur after (emit-expr expr)))
           (do (emit-string after)
               (print ")")))))))
 

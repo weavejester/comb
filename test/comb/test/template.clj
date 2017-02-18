@@ -7,6 +7,7 @@
   (is (= (t/eval "<%= 10 %>") "10"))
   (is (= (t/eval "<%= x %>" {:x "foo"}) "foo"))
   (is (= (t/eval "<%=x%>" {:x "foo"}) "foo"))
+  (is (= (t/eval "<%= x -%> \n\n <%= x -%> \n  <%= x %>" {:x "foo"}) "foo \n foo   foo"))
   (is (= (t/eval "<% (doseq [x xs] %>foo<%= x %> <% ) %>" {:xs [1 2 3]})
          "foo1 foo2 foo3 ")))
 
