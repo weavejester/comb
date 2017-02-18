@@ -57,6 +57,6 @@
   ([source]
      (eval source {}))
   ([source bindings]
-     (let [keys (map (comp symbol name) (keys bindings))
+     (let [keys (apply vector (map (comp keyword name) (keys bindings)))
            func (compile-fn [{:keys keys}] source)]
        (func bindings))))
