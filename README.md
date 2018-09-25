@@ -27,7 +27,7 @@ For example:
 
 To install, add the following dependency to your `project.clj` file:
 
-    [comb "0.1.0"]
+    [comb "0.1.1"]
 
 ## API Documentation
 

@@ -1,4 +1,4 @@
-(defproject comb "0.1.0"
+(defproject comb "0.1.1"
   :description "Clojure templating library similar to ERB"
   :url "https://github.com/weavejester/comb"
   :license {:name "Eclipse Public License"
