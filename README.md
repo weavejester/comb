@@ -11,7 +11,7 @@ This is commonly used for control structures like loops or conditionals.
 For example:
 
     (require '[comb.template :as template])
-    
+
     (template/eval "<% (dotimes [x 3] %>foo<% ) %>")
     => "foofoofoo"
 
@@ -22,6 +22,13 @@ For example:
 
     (template/eval "Hello <%= name %>" {:name "Alice"})
     => "Hello Alice"
+
+The `<% -%>` tags will ignore next line break.
+
+For example:
+
+    (template/eval "Hello <%= name -%>\n\n  Nice to meet you." {:name "Alice"})
+    => "Hello Alice\n  Nice to meet you."
 
 ## Installation
 
