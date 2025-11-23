@@ -48,6 +48,8 @@
   "Compile a template into a function that takes the supplied arguments. The
   template source may be a string, or an I/O source such as a File, Reader or
   InputStream."
+  {:clj-kondo/lint-as 'clojure.core/fn
+   :clj-kondo/ignore [:unused-binding]}
   [args source]
   `(compile-fn '~args ~source))
 
