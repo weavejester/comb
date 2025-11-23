@@ -7,11 +7,11 @@ fragments of Clojure code into a text file.
 
 Add the following dependency to your deps.edn file:
 
-    comb/comb {:mvn/version "0.1.1"}
+    comb/comb {:mvn/version "1.0.0"}
 
 Or to your Leiningen project file:
 
-    [comb "0.1.1"]
+    [comb "1.0.0"]
 
 ## Syntax
 
