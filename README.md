@@ -1,4 +1,4 @@
-# Comb
+# Comb [![Build Status](https://github.com/weavejester/comb/actions/workflows/test.yml/badge.svg)](https://github.com/weavejester/comb/actions/workflows/test.yml)
 
 Comb is a simple templating system for Clojure. You can use Comb to embed
 fragments of Clojure code into a text file.
