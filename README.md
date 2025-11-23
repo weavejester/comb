@@ -3,6 +3,16 @@
 Comb is a simple templating system for Clojure. You can use Comb to embed
 fragments of Clojure code into a text file.
 
+## Installation
+
+Add the following dependency to your deps.edn file:
+
+    comb/comb {:mvn/version "0.1.1"}
+
+Or to your Leiningen project file:
+
+    [comb "0.1.1"]
+
 ## Syntax
 
 The `<% %>` tags are used to embed a section of Clojure code with side-effects.
@@ -26,12 +36,6 @@ For example:
 (template/eval "Hello <%= name %>" {:name "Alice"})
 => "Hello Alice"
 ```
-
-## Installation
-
-To install, add the following dependency to your `project.clj` file:
-
-    [comb "0.1.1"]
 
 ## API Documentation
 
