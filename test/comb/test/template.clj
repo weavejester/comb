@@ -1,6 +1,6 @@
 (ns comb.test.template
-  (:use clojure.test)
-  (:require [comb.template :as t] :reload))
+  (:require [clojure.test :refer [deftest is]]
+            [comb.template :as t]))
 
 (deftest eval-test
   (is (= (t/eval "foo") "foo"))
